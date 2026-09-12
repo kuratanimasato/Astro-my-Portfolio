@@ -8,7 +8,12 @@ export function getLangFromUrl(url: URL): Locale {
 
 export function useTranslations(lang: Locale) {
   return function t(key: keyof (typeof ui)[typeof defaultLang]): string {
-    return ui[lang][key] || ui[defaultLang][key];
+    // ui[lang] にキーが存在しない場合でも safe にアクセスできるようにキャストし、
+    // フォールバック（デフォルト言語 → キー文字列そのもの）を設定
+    const langDict = ui[lang] as Record<string, string>;
+    const defaultDict = ui[defaultLang] as Record<string, string>;
+
+    return langDict[key] || defaultDict[key] || key;
   };
 }
 

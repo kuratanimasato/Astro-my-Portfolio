@@ -4,6 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
 import { formatDate } from '@/utils/formatDate';
 import ImageSlider from '@/components/ImageSlider.astro';
+
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -31,7 +32,7 @@ const formattedDate = formatDate(date);
 ---
 
 <BaseLayout title={title} description={summary}>
-  <article class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
+  <article class="mx-auto max-w-5xl px-6 pt-16 pb-24 sm:pt-24">
     <a
       href={getRelativeLocaleUrl(currentLang, 'work')}
       class="text-ink-soft hover:text-signal font-mono text-xs transition-colors"
@@ -39,7 +40,7 @@ const formattedDate = formatDate(date);
       {t('work.back')}
     </a>
 
-    <ImageSlider images={sliderImages} title={title} alt={title} />
+    <ImageSlider images={sliderImages} title={title} alt={`${title}の制作実績`} />
 
     <dl
       class="border-line text-ink-soft mt-6 flex flex-wrap gap-x-8 gap-y-2 border-y py-4 font-mono text-xs"

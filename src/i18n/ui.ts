@@ -23,6 +23,9 @@ export const ui = {
     'work.back': '← 全ての作品',
     'about.eyebrow': '私について',
     'about.tools': 'Tools',
+    'site.description':
+      '倉谷将人（Masato Kuratani）のポートフォリオ ― スピード、明瞭さ、そして多くの人が見落としがちな細部に重点を置いた、製品デザインとフロントエンドエンジニアリング。',
+    'site.role': '製品設計およびフロントエンドエンジニアリング。',
     'about.contact': 'Get in touch',
   },
   en: {
@@ -41,5 +44,8 @@ export const ui = {
     'about.eyebrow': 'About',
     'about.tools': 'Tools',
     'about.contact': 'Get in touch',
+    'site.description':
+      'Portfolio of Masato Kuratani — Product design and front-end engineering with a focus on speed, clarity, and details that many overlook.',
+    'site.role': 'Product design and front-end engineering.',
   },
 } as const;

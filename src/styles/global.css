@@ -19,6 +19,9 @@
   --signal: #3d3dff; /* the one accent color */
   --line: #e4e2dc; /* borders, rules */
   --surface: #efeeea; /* cards, raised panels */
+  --ff-display: Georgia, 'Times New Roman', serif;
+  --ff-body: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  --ff-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 }
 
 .dark {

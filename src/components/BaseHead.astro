@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import { Font } from 'astro:assets';
 import { SITE } from '@/site.config';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 
 interface Props {
   title: string;
@@ -11,8 +11,12 @@ interface Props {
 
 const { title: pageTitle, description: pageDescription, image } = Astro.props;
 
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
 const fullTitle = pageTitle.includes(SITE.name) ? pageTitle : `${pageTitle} · ${SITE.name}`;
-const description = pageDescription || SITE.description;
+// 個別ページ側の指定があればそれを優先し、無ければ現在の言語に応じた説明文を取得
+const description = pageDescription || t(SITE.description);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image || '/og-image.png', Astro.site);
 ---
@@ -55,11 +59,6 @@ const socialImage = new URL(image || '/og-image.png', Astro.site);
 
 {/* Optional */}
 <meta name="robots" content="index, follow" />
-
-{/* Fonts API (Astro 5.x+)*/}
-<Font cssVariable="--ff-display" preload />
-<Font cssVariable="--ff-body" preload />
-<Font cssVariable="--ff-mono" />
 
 {/* Theme Toggle Script */}
 <script is:inline>
