@@ -6,8 +6,6 @@ import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
-
-const tools = ['TypeScript', 'Astro', 'React', 'Figma', 'Tailwind CSS', 'Node.js'];
 ---
 
 <BaseLayout title="About" description={`A bit about ${SITE.name} and how they work.`}>
@@ -17,7 +15,7 @@ const tools = ['TypeScript', 'Astro', 'React', 'Figma', 'Tailwind CSS', 'Node.js
     </p>
 
     <h1 class="font-display text-ink max-w-xl text-3xl font-medium sm:text-4xl">
-      {t(SITE.role)}
+      {t('site.role')}
     </h1>
 
     <div class="prose prose-sm sm:prose-base mt-8 max-w-xl">
@@ -31,22 +29,6 @@ const tools = ['TypeScript', 'Astro', 'React', 'Figma', 'Tailwind CSS', 'Node.js
         クライアント業務や製品開発業務以外では、いくつかの小規模なオープンソースツールを管理しており、それらを開発する過程で学んだことを時折メモにまとめています。
       </p>
     </div>
-
-    <div class="mt-10">
-      <p class="text-ink-soft mb-3 font-mono text-xs tracking-[0.2em] uppercase">
-        {t('about.tools')}
-      </p>
-      <ul class="flex flex-wrap gap-2">
-        {
-          tools.map((tool) => (
-            <li class="border-line text-ink-soft rounded-full border px-3 py-1 font-mono text-xs">
-              {tool}
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
     <Button href={`mailto:${SITE.email}`} class="mt-10">
       {t('about.contact')}
     </Button>

@@ -2,25 +2,25 @@
 import ThemeToggle from '@/components/ThemeToggle.astro';
 import LanguagePicker from '@/components/LanguagePicker.astro';
 import { SITE } from '@/site.config';
-import { getLangFromUrl, useTranslations, getCleanPathname } from '@/i18n/utils';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
-const cleanPath = getCleanPathname(Astro.url.pathname);
 
 const navItems = [
-  { label: 'Home', href: `${getRelativeLocaleUrl(currentLang, '')}#home`, path: '/' },
-  { label: t('nav.about'), href: `${getRelativeLocaleUrl(currentLang, '')}#about`, path: '/about' },
-  { label: t('nav.work'), href: `${getRelativeLocaleUrl(currentLang, '')}#work`, path: '/work' },
+  { label: 'Home', href: `${getRelativeLocaleUrl(currentLang, '')}#home` },
+  { label: t('nav.about'), href: `${getRelativeLocaleUrl(currentLang, '')}#about` },
+  { label: t('nav.work'), href: `${getRelativeLocaleUrl(currentLang, '')}#work` },
+  { label: t('nav.skills'), href: `${getRelativeLocaleUrl(currentLang, '')}#skills` },
 ];
 
 const homeHref = getRelativeLocaleUrl(currentLang, '');
 const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('//#', '/#');
 ---
 
-<!-- 外枠：画面全幅（w-full）で固定し、スクロール時の影・境界線・背景ぼかしを担当 -->
-<header id="site-header" class="sticky top-0 z-40 w-full py-3 transition-all duration-300">
+<!-- 外枠：画面全幅（w-full）で固定し、z-50 で最前面へ -->
+<header id="site-header" class="sticky top-0 z-50 w-full py-3 transition-all duration-300">
   <!-- 内枠：900pxカプセルデザイン -->
   <div
     class="border-line bg-paper/90 mx-4 max-w-[900px] rounded-2xl border shadow-md backdrop-blur sm:mx-auto"
@@ -33,21 +33,14 @@ const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('
       {/* Desktop Navigation */}
       <nav class="hidden items-center gap-5 sm:flex" aria-label="Primary">
         {
-          navItems.map((item) => {
-            const isActive = cleanPath === item.path || cleanPath.startsWith(`${item.path}/`);
-            return (
-              <a
-                href={item.href}
-                aria-current={isActive ? 'page' : undefined}
-                class:list={[
-                  'nav-link font-mono text-xs tracking-wide uppercase transition-colors',
-                  isActive ? 'text-signal font-semibold' : 'text-ink-soft hover:text-ink',
-                ]}
-              >
-                {item.label}
-              </a>
-            );
-          })
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class="nav-link text-ink-soft hover:text-ink font-mono text-xs tracking-wide uppercase transition-colors"
+            >
+              {item.label}
+            </a>
+          ))
         }
         <a
           href={contactHref}
@@ -110,21 +103,14 @@ const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('
     >
       <div class="mx-auto flex max-w-3xl flex-col space-y-3 px-6 py-4">
         {
-          navItems.map((item) => {
-            const isActive = cleanPath === item.path || cleanPath.startsWith(`${item.path}/`);
-            return (
-              <a
-                href={item.href}
-                aria-current={isActive ? 'page' : undefined}
-                class:list={[
-                  'nav-link py-1.5 font-mono text-sm tracking-wide uppercase transition-colors',
-                  isActive ? 'text-signal font-semibold' : 'text-ink-soft hover:text-ink',
-                ]}
-              >
-                {item.label}
-              </a>
-            );
-          })
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class="nav-link text-ink-soft hover:text-ink py-1.5 font-mono text-sm tracking-wide uppercase transition-colors"
+            >
+              {item.label}
+            </a>
+          ))
         }
         <a
           href={contactHref}
@@ -225,8 +211,10 @@ const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('
     const setActiveLink = (targetId: string | null) => {
       navLinks.forEach((link) => {
         const href = link.getAttribute('href') || '';
-        const isMatch =
-          targetId && (href.endsWith(`#${targetId}`) || href.includes(`#${targetId}`));
+        const hashIndex = href.indexOf('#');
+        const linkHash = hashIndex !== -1 ? href.substring(hashIndex + 1) : '';
+
+        const isMatch = targetId && linkHash === targetId;
 
         if (isMatch) {
           link.classList.add('text-signal', 'font-semibold');
@@ -240,38 +228,42 @@ const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('
       });
     };
 
-    // セクション交差検知
-    const observerOptions = {
-      root: null,
-      rootMargin: '-15% 0px -75% 0px',
-      threshold: 0,
-    };
+    const handleScrollSpy = () => {
+      // 画面最上部にいる場合は "home" を選択
+      if (window.scrollY < 50) {
+        setActiveLink('home');
+        return;
+      }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const currentId = entry.target.getAttribute('id');
-          if (currentId) setActiveLink(currentId);
+      // ページ最下部に到達した場合は "contact" または最後のセクションを選択
+      const isAtBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50;
+      if (isAtBottom) {
+        const lastSectionId = sections[sections.length - 1]?.getAttribute('id');
+        if (lastSectionId) {
+          setActiveLink(lastSectionId);
+          return;
+        }
+      }
+
+      // 画面中央付近で交差しているセクションを検索
+      const centerPoint = window.innerHeight / 3;
+      let currentSectionId: string | null = null;
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= centerPoint && rect.bottom >= centerPoint) {
+          currentSectionId = section.getAttribute('id');
         }
       });
-    }, observerOptions);
 
-    sections.forEach((section) => observer.observe(section));
+      if (currentSectionId) {
+        setActiveLink(currentSectionId);
+      }
+    };
 
-    // 画面最上部に戻ったときのクリア処理
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (window.scrollY < 50) {
-          // トップにいる場合はアンカーリンクのハイライトをリセット（または最初の項目にセット）
-          const firstSectionId = sections[0]?.getAttribute('id');
-          if (firstSectionId && window.scrollY < 20) {
-            setActiveLink(firstSectionId);
-          }
-        }
-      },
-      { passive: true },
-    );
+    window.addEventListener('scroll', handleScrollSpy, { passive: true });
+    handleScrollSpy(); // 初期実行
   }
 
   document.addEventListener('astro:page-load', () => {
