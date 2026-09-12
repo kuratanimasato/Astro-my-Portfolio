@@ -110,3 +110,66 @@
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: #fafbff;
+}
+
+.aurora-bg::before,
+.aurora-bg::after {
+  content: "";
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.25;
+}
+
+.aurora-bg::before {
+  top: -250px;
+  left: -150px;
+  background: #67e8f9;
+}
+
+.aurora-bg::after {
+  top: 100px;
+  right: -200px;
+  background: #a78bfa;
+}
+.aurora-bg {
+  background:
+    radial-gradient(
+      circle at 50% 80%,
+      rgba(96, 165, 250, 0.12),
+      transparent 35%
+    ),
+    #fafbff;
+}
+@keyframes auroraFloat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(30px, 20px, 0) scale(1.05);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.aurora-bg::before {
+  animation: auroraFloat 12s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .aurora-bg::before,
+  .aurora-bg::after {
+    animation: none;
+  }
+}

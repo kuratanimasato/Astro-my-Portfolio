@@ -12,6 +12,15 @@ export default defineConfig({
 
   integrations: [sitemap()],
 
+  // Internationalization (i18n) configuration
+  i18n: {
+    defaultLocale: 'ja',
+    locales: ['ja', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
   // Prefetches internal links on hover/viewport entry for near-instant navigation.
   prefetch: true,
 

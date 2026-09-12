@@ -4,6 +4,7 @@ summary: An internal tools platform that replaced six disconnected spreadsheets 
 role: Lead Product Designer & Frontend Engineer
 date: 2026-04-01
 tags: [Product Design, Astro, TypeScript, Design Systems]
+cover: ./fieldnote.png
 url: https://example.com
 repo: https://github.com/your-username/studio-os
 featured: true

@@ -1,41 +1,80 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '@/utils/formatDate';
+import { Image } from 'astro:assets';
+import { getLangFromUrl } from '@/i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
   entry: CollectionEntry<'work'>;
 }
 
 const { entry } = Astro.props;
-const { title, summary, date, tags } = entry.data;
+const { title, summary, date, tags, cover } = entry.data;
 
-const stamp = formatDate(date, "compact");
+const currentLang = getLangFromUrl(Astro.url);
+const workUrl = getRelativeLocaleUrl(currentLang, `work/${entry.id}`);
+const stamp = formatDate(date, 'compact');
 ---
 
 <a
-  href={`/work/${entry.id}`}
-  class="group border-line hover:border-signal grid grid-cols-[3.5rem_1fr_auto] items-center gap-4 border-b py-5 transition-colors sm:grid-cols-[4.5rem_1fr_auto] sm:gap-6"
+  href={workUrl}
+  class="group relative block overflow-hidden rounded-2xl border border-line bg-surface"
 >
-  <span class="text-ink-soft font-mono text-xs">{stamp}</span>
+  <!-- Cover -->
+  {cover && (
+    <div class="relative overflow-hidden">
+      <Image
+        src={cover}
+        alt={`${title}の制作実績`}
+        class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      />
 
-  <span class="min-w-0">
-    <span
-      class="font-display text-ink group-hover:text-signal block truncate text-lg transition-colors"
-    >
-      {title}
-    </span>
-    <span class="text-ink-soft hidden truncate text-sm sm:block">{summary}</span>
-  </span>
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/30 to-transparent"
+      ></div>
+    </div>
+  )}
 
-  <span class="flex items-center gap-4">
-    <span class="text-ink-soft hidden font-mono text-[11px] md:block">
-      {tags.slice(0, 2).join(' · ')}
-    </span>
-    <span
-      aria-hidden="true"
-      class="text-ink-soft group-hover:text-signal transition-all group-hover:translate-x-1"
-    >
-      →
-    </span>
-  </span>
+  <!-- Content -->
+  <div class="p-6">
+    <div class="flex items-start justify-between gap-4">
+      <div class="min-w-0">
+        <h3
+          class="font-display text-ink text-xl font-semibold transition-colors group-hover:text-signal"
+        >
+          {title}
+        </h3>
+
+        <p class="text-ink-soft mt-3 text-sm leading-relaxed">
+          {summary}
+        </p>
+      </div>
+
+      <!-- Arrow -->
+      <span
+        aria-hidden="true"
+        class="text-ink-soft shrink-0 text-xl transition-transform duration-300 group-hover:translate-x-1 group-hover:text-signal"
+      >
+        →
+      </span>
+    </div>
+
+    <!-- Tags -->
+    <div class="mt-5 flex flex-wrap gap-2">
+      {tags.slice(0, 5).map((tag) => (
+        <span
+          class="border-line bg-surface-soft text-ink-soft rounded-full border px-3 py-1 font-mono text-[11px]"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+
+    <!-- Date -->
+    <div class="text-ink-soft mt-4 font-mono text-[11px]">
+      {stamp}
+    </div>
+  </div>
 </a>

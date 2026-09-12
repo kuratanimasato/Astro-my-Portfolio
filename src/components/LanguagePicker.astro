@@ -1,0 +1,37 @@
+---
+import { languages, type Locale } from '@/i18n/ui';
+import { getLangFromUrl, getCleanPathname } from '@/i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const currentLang = getLangFromUrl(Astro.url);
+const cleanPath = getCleanPathname(Astro.url.pathname);
+---
+
+<div
+  class="border-line bg-surface/50 inline-flex items-center rounded-full border p-0.5 text-xs font-mono"
+  role="group"
+  aria-label="Language selector"
+>
+  {
+    (Object.keys(languages) as Locale[]).map((lang) => {
+      const isActive = currentLang === lang;
+      const targetPath = cleanPath === '/' ? '' : cleanPath.replace(/^\//, '');
+      const targetUrl = getRelativeLocaleUrl(lang, targetPath);
+      return (
+        <a
+          href={targetUrl}
+          class:list={[
+            'rounded-full px-2 py-0.5 text-[11px] font-medium uppercase transition-all',
+            isActive
+              ? 'bg-ink text-paper shadow-xs'
+              : 'text-ink-soft hover:text-ink',
+          ]}
+          aria-current={isActive ? 'true' : undefined}
+          aria-label={`Switch to ${lang === 'ja' ? '日本語' : 'English'}`}
+        >
+          {languages[lang]}
+        </a>
+      );
+    })
+  }
+</div>

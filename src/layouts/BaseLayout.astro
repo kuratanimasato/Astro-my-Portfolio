@@ -12,14 +12,16 @@ interface Props {
 }
 
 const { title, description = SITE.description, image = '/og-image.png' } = Astro.props;
+const currentLocale = Astro.currentLocale || SITE.locale;
 ---
 
 <!doctype html>
-<html lang={SITE.locale}>
+<html lang={currentLocale}>
   <head>
     <BaseHead title={title} description={description} image={image} />
   </head>
   <body id="top" class="bg-paper text-ink">
+      <div class="aurora-bg" aria-hidden="true"></div>
     <Header />
     <main>
       <slot />

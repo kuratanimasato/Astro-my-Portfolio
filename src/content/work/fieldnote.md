@@ -4,6 +4,7 @@ summary: A minimal, offline-first notes app for researchers doing interviews awa
 role: Independent / Side Project
 date: 2025-06-20
 tags: [Svelte, PWA, IndexedDB]
+cover: ./fieldnote.png
 url: https://example.com
 repo: https://github.com/your-username/fieldnote
 featured: false

@@ -14,7 +14,7 @@ const work = defineCollection({
       role: z.string(),
       date: z.coerce.date(),
       tags: z.array(z.string()).default([]),
-      cover: image().optional(),
+      cover: image(),
       url: z.url().optional(),
       repo: z.url().optional(),
       featured: z.boolean().default(false),

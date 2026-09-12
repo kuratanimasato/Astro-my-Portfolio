@@ -1,41 +1,188 @@
 ---
 import ThemeToggle from '@/components/ThemeToggle.astro';
-import { SITE, NAV_LINKS } from '@/site.config';
+import LanguagePicker from '@/components/LanguagePicker.astro';
+import { SITE } from '@/site.config';
+import { getLangFromUrl, useTranslations, getCleanPathname } from '@/i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
-const currentPath = Astro.url.pathname;
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const cleanPath = getCleanPathname(Astro.url.pathname);
+
+const navItems = [
+  { label: t('nav.work'), href: getRelativeLocaleUrl(currentLang, 'work'), path: '/work' },
+  { label: t('nav.about'), href: getRelativeLocaleUrl(currentLang, 'about'), path: '/about' },
+];
+
+const homeHref = getRelativeLocaleUrl(currentLang, '');
+const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('//#', '/#');
 ---
 
 <header class="border-line bg-paper/90 sticky top-0 z-40 border-b backdrop-blur">
   <div class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-6 py-4">
-    <a href="/" class="font-display text-ink text-lg font-medium">
+    <a href={homeHref} class="font-display text-ink text-lg font-medium">
       {SITE.name}
     </a>
 
-    <nav class="flex items-center gap-5" aria-label="Primary">
+    {/* Desktop Navigation */}
+    <nav class="hidden items-center gap-5 sm:flex" aria-label="Primary">
       {
-        NAV_LINKS.map((link) => {
-          const isActive = currentPath === link.href || currentPath.startsWith(`${link.href}/`);
+        navItems.map((item) => {
+          const isActive = cleanPath === item.path || cleanPath.startsWith(`${item.path}/`);
           return (
             <a
-              href={link.href}
+              href={item.href}
               aria-current={isActive ? 'page' : undefined}
               class:list={[
                 'font-mono text-xs tracking-wide uppercase transition-colors',
                 isActive ? 'text-signal' : 'text-ink-soft hover:text-ink',
               ]}
             >
-              {link.label}
+              {item.label}
             </a>
           );
         })
       }
       <a
-        href="/#contact"
-        class="text-ink-soft hover:text-ink hidden font-mono text-xs tracking-wide uppercase transition-colors sm:inline"
+        href={contactHref}
+        class="text-ink-soft hover:text-ink font-mono text-xs tracking-wide uppercase transition-colors"
       >
-        Contact
+        {t('nav.contact')}
       </a>
+      <LanguagePicker />
       <ThemeToggle />
     </nav>
+
+    {/* Mobile Controls (LanguagePicker + ThemeToggle + Hamburger) */}
+    <div class="flex items-center gap-2 sm:hidden">
+      <LanguagePicker />
+      <ThemeToggle />
+      <button
+        type="button"
+        id="mobile-menu-button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="メニューを開閉"
+        class="text-ink-soft hover:border-signal hover:text-signal border-line flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors"
+      >
+        <svg
+          class="menu-open-icon h-4 w-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+        <svg
+          class="menu-close-icon hidden h-4 w-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  {/* Mobile Dropdown Menu */}
+  <div
+    id="mobile-menu"
+    class="border-line bg-paper/95 hidden border-t backdrop-blur sm:hidden"
+    aria-label="Mobile Navigation"
+  >
+    <div class="mx-auto flex max-w-3xl flex-col px-6 py-4 space-y-3">
+      {
+        navItems.map((item) => {
+          const isActive = cleanPath === item.path || cleanPath.startsWith(`${item.path}/`);
+          return (
+            <a
+              href={item.href}
+              aria-current={isActive ? 'page' : undefined}
+              class:list={[
+                'font-mono text-sm tracking-wide uppercase transition-colors py-1.5',
+                isActive ? 'text-signal font-semibold' : 'text-ink-soft hover:text-ink',
+              ]}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+      <a
+        href={contactHref}
+        class="text-ink-soft hover:text-ink font-mono text-sm tracking-wide uppercase transition-colors py-1.5"
+      >
+        {t('nav.contact')}
+      </a>
+    </div>
   </div>
 </header>
+
+<script>
+  function initMobileMenu() {
+    const button = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+    if (!button || !menu || button.dataset.bound) return;
+    button.dataset.bound = 'true';
+
+    const menuEl = menu;
+    const btnEl = button;
+    const openIcon = btnEl.querySelector('.menu-open-icon');
+    const closeIcon = btnEl.querySelector('.menu-close-icon');
+
+    function toggleMenu(isOpen?: boolean) {
+      const willOpen = isOpen ?? menuEl.classList.contains('hidden');
+      if (willOpen) {
+        menuEl.classList.remove('hidden');
+        btnEl.setAttribute('aria-expanded', 'true');
+        openIcon?.classList.add('hidden');
+        closeIcon?.classList.remove('hidden');
+      } else {
+        menuEl.classList.add('hidden');
+        btnEl.setAttribute('aria-expanded', 'false');
+        openIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+      }
+    }
+
+    btnEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    // Close when clicking a link inside menu
+    menuEl.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        toggleMenu(false);
+      });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menuEl.contains(e.target as Node) && !btnEl.contains(e.target as Node)) {
+        toggleMenu(false);
+      }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        toggleMenu(false);
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initMobileMenu);
+</script>

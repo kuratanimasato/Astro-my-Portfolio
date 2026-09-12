@@ -4,7 +4,6 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
 import { formatDate } from '@/utils/formatDate';
 import { Image } from 'astro:assets';
-
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -21,7 +20,7 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, summary, role, date, tags, url, repo,cover } = entry.data;
+const { title, summary, role, date, tags, url, repo, cover } = entry.data;
 const { Content } = await render(entry);
 
 const currentLang = getLangFromUrl(Astro.url);
@@ -38,15 +37,13 @@ const formattedDate = formatDate(date);
       {t('work.back')}
     </a>
 
-  {cover && (
-  <div class="mt-8 overflow-hidden rounded-2xl border border-line">
-    <Image
-      src={cover}
-      alt={`${title}の制作実績`}
-      class="w-full"
-    />
-  </div>
-)}
+    {
+      cover && (
+        <div class="mt-8 overflow-hidden rounded-2xl border border-line">
+          <Image src={cover} alt={title} class="w-full" />
+        </div>
+      )
+    }
 
     <dl
       class="border-line text-ink-soft mt-6 flex flex-wrap gap-x-8 gap-y-2 border-y py-4 font-mono text-xs"
