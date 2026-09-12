@@ -5,6 +5,10 @@ role: Frontend Engineer & UI Designer
 date: 2025-04-10
 tags: [Web Audio API, Canvas, Vue.js, Tailwind CSS]
 cover: ./fieldnote.png
+images:
+  - ./fieldnote.png
+  - ./fieldnote.png
+  - ./fieldnote.png
 url: https://example.com
 repo: https://github.com/your-username/echo-player
 featured: false

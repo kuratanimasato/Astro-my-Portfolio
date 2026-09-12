@@ -5,6 +5,10 @@ role: Frontend Engineer
 date: 2025-11-12
 tags: [Data Visualization, React, Mapbox]
 cover: ./fieldnote.png
+images:
+  - ./fieldnote.png
+  - ./fieldnote.png
+  - ./fieldnote.png
 repo: https://github.com/your-username/northwind-atlas
 featured: true
 draft: false

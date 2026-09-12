@@ -5,6 +5,10 @@ role: Design System Lead
 date: 2026-02-15
 tags: [Design System, Tailwind CSS, TypeScript, Storybook]
 cover: ./fieldnote.png
+images:
+  - ./fieldnote.png
+  - ./fieldnote.png
+  - ./fieldnote.png
 url: https://example.com
 repo: https://github.com/your-username/aurora-design-system
 featured: true
