@@ -4,6 +4,7 @@ import Footer from '@/components/Footer.astro';
 import { SITE } from '@/site.config';
 import '@/styles/global.css';
 import BaseHead from '@/components/BaseHead.astro';
+import AOS from '@/components/AOS.astro';
 
 interface Props {
   title: string;
@@ -27,5 +28,6 @@ const currentLocale = Astro.currentLocale || SITE.locale;
       <slot />
     </main>
     <Footer />
+    <AOS />
   </body>
 </html>

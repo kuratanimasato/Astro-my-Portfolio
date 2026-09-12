@@ -1,0 +1,45 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+import WorkRow from '@/components/WorkRow.astro';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  allWorkCount: number;
+  selectedWork: CollectionEntry<'work'>[];
+}
+
+const { allWorkCount, selectedWork } = Astro.props;
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<section
+  id="work"
+  class="border-line bg-paper/40 rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12"
+>
+  <SectionHeading eyebrow={t('home.selectedWork')} count={allWorkCount} />
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {
+      selectedWork.map((entry, index) => (
+        <div data-aos="fade-up" data-aos-delay={index * 300}>
+          <WorkRow entry={entry} />
+        </div>
+      ))
+    }
+  </div>
+  {
+    allWorkCount > selectedWork.length && (
+      <div class="mt-8">
+        <a
+          href={getRelativeLocaleUrl(currentLang, 'work')}
+          class="text-ink-soft hover:text-signal font-mono text-xs transition-colors"
+        >
+          {t('home.viewAll')}
+        </a>
+      </div>
+    )
+  }
+</section>

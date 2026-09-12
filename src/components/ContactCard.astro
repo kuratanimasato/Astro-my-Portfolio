@@ -1,0 +1,24 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+import { SITE } from '@/site.config';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<section
+  id="contact"
+  class="border-line bg-paper/40 min-h-[30vh] rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12"
+>
+  <SectionHeading eyebrow={t('home.contactEyebrow')} />
+  <p class="font-display text-ink max-w-lg text-2xl sm:text-3xl">
+    {t('home.contactTitle')}
+  </p>
+  <a
+    href={`mailto:${SITE.email}`}
+    class="text-signal mt-4 inline-flex items-center gap-2 font-mono hover:underline"
+  >
+    {SITE.email}
+  </a>
+</section>

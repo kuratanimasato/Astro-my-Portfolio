@@ -1,10 +1,12 @@
 ---
-import { SKILL_CATEGORIES, SITE } from '@/site.config';
+import { SITE } from '@/site.config';
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
-import WorkRow from '@/components/WorkRow.astro';
-import SectionHeading from '@/components/SectionHeading.astro';
+import AboutCard from '@/components/AboutCard.astro';
+import WorkSection from '@/components/WorkSection.astro';
+import SkillsCard from '@/components/SkillsCard.astro';
+import ContactCard from '@/components/ContactCard.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -19,8 +21,9 @@ const selected = [...featured, ...rest].slice(0, 3);
 ---
 
 <BaseLayout title={SITE.name}>
-  <div class="space-y-12 sm:space-y-20">
-    <section id="home" class="mx-auto max-w-6xl px-6 pt-16 pb-12 sm:pt-24 sm:pb-16">
+  <div class="mx-auto max-w-6xl space-y-12 px-4 py-8 sm:space-y-16 sm:px-6">
+    <!-- HERO (HOME) SECTION : 枠線・背景なしの標準レイアウト -->
+    <section id="home" class="px-2 pt-12 pb-8 sm:pt-20 sm:pb-12">
       <h1 class="font-display text-ink max-w-2xl text-4xl leading-[1.1] font-medium sm:text-5xl">
         {SITE.tagline}
       </h1>
@@ -32,71 +35,16 @@ const selected = [...featured, ...rest].slice(0, 3);
       </div>
     </section>
 
-    <section id="about" class="mx-auto max-w-6xl px-6 py-12 sm:py-16">
-      <SectionHeading eyebrow={t('home.aboutEyebrow')} />
-      <p class="text-ink-soft max-w-xl">
-        {t('site.description')}
-      </p>
-      <a
-        href={getRelativeLocaleUrl(currentLang, 'about')}
-        class="text-signal mt-4 inline-block font-mono text-xs hover:underline"
-      >
-        {t('home.aboutMore')}
-      </a>
-    </section>
+    <!-- ABOUT SECTION -->
+    <AboutCard />
 
-    <section id="work" class="mx-auto max-w-6xl px-6 py-12 sm:py-16">
-      <SectionHeading eyebrow={t('home.selectedWork')} count={allWork.length} />
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {selected.map((entry) => <WorkRow entry={entry} />)}
-      </div>
-      {
-        allWork.length > selected.length && (
-          <div class="mt-8">
-            <a
-              href={getRelativeLocaleUrl(currentLang, 'work')}
-              class="text-ink-soft hover:text-signal font-mono text-xs transition-colors"
-            >
-              {t('home.viewAll')}
-            </a>
-          </div>
-        )
-      }
-    </section>
+    <!-- WORK SECTION -->
+    <WorkSection allWorkCount={allWork.length} selectedWork={selected} />
 
-    <!-- スキルセクション：PCでの高さ不足を防ぐために py-16 / min-h を設定 -->
-    <section id="skills" class="mx-auto min-h-[40vh] max-w-6xl px-6 py-16 sm:py-24">
-      <SectionHeading eyebrow={t('nav.skills')} count={SKILL_CATEGORIES.length} />
+    <!-- SKILLS SECTION -->
+    <SkillsCard />
 
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {
-          SKILL_CATEGORIES.map((category) => (
-            <div class="border-line bg-paper/50 flex flex-col rounded-2xl border p-6 shadow-sm">
-              <h3 class="font-display text-ink mb-4 text-lg font-medium">{category.title}</h3>
-              <ul class="flex flex-wrap gap-2">
-                {category.skills.map((skill) => (
-                  <li class="border-line text-ink-soft bg-paper rounded-lg border px-3 py-1.5 font-mono text-xs">
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
-    </section>
-
-    <section id="contact" class="mx-auto min-h-[30vh] max-w-6xl px-6 pt-16 pb-32 sm:py-24">
-      <SectionHeading eyebrow={t('home.contactEyebrow')} />
-      <p class="font-display text-ink max-w-lg text-2xl sm:text-3xl">
-        {t('home.contactTitle')}
-      </p>
-      <a
-        href={`mailto:${SITE.email}`}
-        class="text-signal mt-4 inline-flex items-center gap-2 font-mono hover:underline"
-      >
-        {SITE.email}
-      </a>
-    </section>
+    <!-- CONTACT SECTION -->
+    <ContactCard />
   </div>
 </BaseLayout>

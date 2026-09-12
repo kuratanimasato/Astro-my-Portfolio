@@ -20,7 +20,7 @@ export const ui = {
     'home.contactEyebrow': 'お問い合わせ',
     'home.contactTitle': 'お問い合わせはこちらから',
     'work.allWork': 'All work',
-    'work.back': '← 全ての作品',
+    'work.back': '全ての作品',
     'about.eyebrow': '私について',
     'about.tools': 'Tools',
     'site.description':
