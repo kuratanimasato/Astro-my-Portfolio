@@ -14,4 +14,3 @@ draft: false
 Zenith Analytics provides granular insights into user interactions, onboarding funnels, and retention curves in real time.
 
 Built on top of ClickHouse and WebSocket streaming, it enables marketing and growth teams to slice and dice high-volume event logs with instant feedback.
-

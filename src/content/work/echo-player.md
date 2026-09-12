@@ -14,4 +14,3 @@ draft: false
 Echo is an experimental browser-based audio workstation and player emphasizing rich sound manipulation and ambient visuals.
 
 It leverages the Web Audio API for custom filter graphs and real-time canvas rendering for dynamic audio frequency visualizers.
-

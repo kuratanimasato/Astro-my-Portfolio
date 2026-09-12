@@ -14,4 +14,3 @@ draft: false
 Aurora is an enterprise design system created to unify brand identity and improve developer efficiency across multiple product teams.
 
 We designed over 40 accessible UI components adhering to WCAG 2.1 AA standards, accompanied by comprehensive Storybook documentation and automated visual regression tests.
-

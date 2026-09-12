@@ -8,7 +8,7 @@ const cleanPath = getCleanPathname(Astro.url.pathname);
 ---
 
 <div
-  class="border-line bg-surface/50 inline-flex items-center rounded-full border p-0.5 text-xs font-mono"
+  class="border-line bg-surface/50 inline-flex items-center rounded-full border p-0.5 font-mono text-xs"
   role="group"
   aria-label="Language selector"
 >
@@ -22,9 +22,7 @@ const cleanPath = getCleanPathname(Astro.url.pathname);
           href={targetUrl}
           class:list={[
             'rounded-full px-2 py-0.5 text-[11px] font-medium uppercase transition-all',
-            isActive
-              ? 'bg-ink text-paper shadow-xs'
-              : 'text-ink-soft hover:text-ink',
+            isActive ? 'bg-ink text-paper shadow-xs' : 'text-ink-soft hover:text-ink',
           ]}
           aria-current={isActive ? 'true' : undefined}
           aria-label={`Switch to ${lang === 'ja' ? '日本語' : 'English'}`}
