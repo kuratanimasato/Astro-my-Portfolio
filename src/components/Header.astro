@@ -23,20 +23,19 @@ const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('
 <header id="site-header" class="sticky top-0 z-50 w-full py-3 transition-all duration-300">
   <!-- 内枠：900pxカプセルデザイン -->
   <div
-    class="border-line bg-paper/90 mx-4 max-w-[900px] rounded-2xl border shadow-md backdrop-blur sm:mx-auto"
+    class="border-line bg-paper/90 mx-4 max-w-[1100px] rounded-2xl border shadow-md backdrop-blur sm:mx-auto"
   >
     <div class="mx-auto flex max-w-4xl items-center justify-between gap-4 px-6 py-3">
       <a href={homeHref} class="font-display text-ink text-lg font-medium">
         {SITE.name}
       </a>
 
-      {/* Desktop Navigation */}
       <nav class="hidden items-center gap-5 sm:flex" aria-label="Primary">
         {
           navItems.map((item) => (
             <a
               href={item.href}
-              class="nav-link text-ink-soft hover:text-ink font-mono text-xs tracking-wide uppercase transition-colors"
+              class="nav-link text-ink-soft hover:text-ink text-xm font-mono tracking-wide uppercase transition-colors"
             >
               {item.label}
             </a>
@@ -44,7 +43,7 @@ const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('
         }
         <a
           href={contactHref}
-          class="nav-link text-ink-soft hover:text-ink font-mono text-xs tracking-wide uppercase transition-colors"
+          class="nav-link text-ink-soft hover:text-ink text-xm scrollbar-track-orange-50 font-mono tracking-wide uppercase transition-colors"
         >
           {t('nav.contact')}
         </a>

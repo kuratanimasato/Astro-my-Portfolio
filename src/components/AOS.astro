@@ -5,16 +5,24 @@ import 'aos/dist/aos.css';
 <script>
   import AOS from 'aos';
 
-  const initAOS = () => {
+  const setupAOS = () => {
     AOS.init({
-      duration: 700,
+      duration: 550,
       easing: 'ease-out-cubic',
       once: true,
       offset: 80,
+      throttleDelay: 16,
       disable: () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
     });
+    AOS.refreshHard();
   };
+  document.addEventListener('astro:page-load', () => {
+    setupAOS();
+  });
 
-  initAOS();
-  document.addEventListener('astro:page-load', () => AOS.refreshHard());
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      AOS.refreshHard();
+    }
+  });
 </script>

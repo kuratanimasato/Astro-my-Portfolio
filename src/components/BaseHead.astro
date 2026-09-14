@@ -15,7 +15,6 @@ const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
 const fullTitle = pageTitle.includes(SITE.name) ? pageTitle : `${pageTitle} · ${SITE.name}`;
-// 個別ページ側の指定があればそれを優先し、無ければ現在の言語に応じた説明文を取得
 const description = pageDescription || t(SITE.description);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image || '/og-image.png', Astro.site);
@@ -60,11 +59,7 @@ const socialImage = new URL(image || '/og-image.png', Astro.site);
 {/* Optional */}
 <meta name="robots" content="index, follow" />
 
-{/* Theme Toggle Script */}
 <script is:inline>
-  // Runs before first paint to avoid a flash of the wrong theme.
-  // Kept in sync by ThemeToggle.astro and re-applied after every
-  // view-transition navigation below.
   (function () {
     const stored = localStorage.getItem('theme');
     const theme =

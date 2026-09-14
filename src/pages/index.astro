@@ -22,16 +22,20 @@ const selected = [...featured, ...rest].slice(0, 3);
 
 <BaseLayout title={SITE.name}>
   <div class="mx-auto max-w-6xl space-y-12 px-4 py-8 sm:space-y-16 sm:px-6">
-    <!-- HERO (HOME) SECTION : 枠線・背景なしの標準レイアウト -->
-    <section id="home" class="px-2 pt-12 pb-8 sm:pt-20 sm:pb-12">
-      <h1 class="font-display text-ink max-w-2xl text-4xl leading-[1.1] font-medium sm:text-5xl">
-        {SITE.tagline}
-      </h1>
+    <!-- HERO SECTION -->
+    <section id="home" class="flex min-h-[calc(100vh-5rem)] items-center px-2 py-20">
+      <div>
+        <h1
+          class="font-display text-ink max-w-3xl text-5xl leading-[1.1] font-medium sm:text-6xl lg:text-7xl"
+        >
+          {SITE.tagline}
+        </h1>
 
-      <div class="mt-8 flex flex-wrap items-center gap-3">
-        <Button href={getRelativeLocaleUrl(currentLang, 'work')} variant="solid">
-          {t('home.viewWork')}
-        </Button>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <Button href={getRelativeLocaleUrl(currentLang, 'work')} variant="solid">
+            {t('home.viewWork')}
+          </Button>
+        </div>
       </div>
     </section>
 

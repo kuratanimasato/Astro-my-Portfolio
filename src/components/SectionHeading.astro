@@ -7,8 +7,10 @@ interface Props {
 const { eyebrow, count } = Astro.props;
 ---
 
-<div class="border-line mb-8 flex items-baseline justify-between border-b pb-3">
-  <h2 class="text-ink-soft font-mono text-xs tracking-[0.2em] uppercase">{eyebrow}</h2>
+<div class="border-line mb-4 flex items-baseline justify-between border-b pb-3">
+  <h2 class="text-ink-soft scroll mt-3.5 font-mono text-xl tracking-[0.2em] uppercase">
+    {eyebrow}
+  </h2>
   {
     typeof count === 'number' && (
       <span class="text-ink-soft font-mono text-xs">({String(count).padStart(2, '0')})</span>

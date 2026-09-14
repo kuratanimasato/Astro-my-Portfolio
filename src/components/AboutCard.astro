@@ -2,6 +2,7 @@
 import SectionHeading from '@/components/SectionHeading.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import ProfileImage from '@/components/ProfileImage.astro';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
@@ -11,13 +12,14 @@ const t = useTranslations(currentLang);
   id="about"
   class="border-line bg-paper/40 rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12"
 >
+  <ProfileImage />
   <SectionHeading eyebrow={t('home.aboutEyebrow')} />
-  <p class="text-ink-soft max-w-xl">
+  <p class="text-ink-soft text-xl">
     {t('site.description')}
   </p>
   <a
     href={getRelativeLocaleUrl(currentLang, 'about')}
-    class="text-signal mt-4 inline-block font-mono text-xs hover:underline"
+    class="text-signal mt-3 inline-block font-mono text-shadow-xs hover:underline"
   >
     {t('home.aboutMore')}
   </a>
