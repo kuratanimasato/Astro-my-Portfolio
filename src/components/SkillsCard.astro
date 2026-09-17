@@ -1,17 +1,13 @@
 ---
 import SectionHeading from '@/components/SectionHeading.astro';
 import { SKILL_CATEGORIES } from '@/site.config';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 ---
 
 <section
   id="skills"
   class="border-line bg-paper/40 min-h-[40vh] rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12"
 >
-  <SectionHeading eyebrow={t('nav.skills')} />
+  <SectionHeading eyebrow="スキル" />
 
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
     {

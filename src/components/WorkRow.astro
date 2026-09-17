@@ -2,8 +2,6 @@
 import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '@/utils/formatDate';
 import { Image } from 'astro:assets';
-import { getLangFromUrl } from '@/i18n/utils';
-import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
   entry: CollectionEntry<'work'>;
@@ -12,8 +10,7 @@ interface Props {
 const { entry } = Astro.props;
 const { title, summary, date, tags, cover } = entry.data;
 
-const currentLang = getLangFromUrl(Astro.url);
-const workUrl = getRelativeLocaleUrl(currentLang, `work/${entry.id}`);
+const workUrl = `/work/${entry.id}`;
 const stamp = formatDate(date, 'compact');
 ---
 

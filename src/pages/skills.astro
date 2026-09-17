@@ -1,9 +1,5 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 
 // 表示したいスキルのリスト（カテゴリ分けの例）
 const skillCategories = [
@@ -22,15 +18,11 @@ const skillCategories = [
 ];
 ---
 
-<BaseLayout title={t('skills.title')} description={t('skills.description')}>
+<BaseLayout title="スキル" description="私が普段使用している技術やツールの一覧です。">
   <section class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
-    <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">
-      {t('nav.skills')}
-    </p>
+    <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">スキル</p>
 
-    <h1 class="font-display text-ink mb-12 max-w-xl text-3xl font-medium sm:text-4xl">
-      {t('skills.title')}
-    </h1>
+    <h1 class="font-display text-ink mb-12 max-w-xl text-3xl font-medium sm:text-4xl">スキル</h1>
 
     <div class="space-y-12">
       {

@@ -1,22 +1,16 @@
 ---
 import ThemeToggle from '@/components/ThemeToggle.astro';
-import LanguagePicker from '@/components/LanguagePicker.astro';
 import { SITE } from '@/site.config';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-import { getRelativeLocaleUrl } from 'astro:i18n';
-
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 
 const navItems = [
-  { label: 'Home', href: `${getRelativeLocaleUrl(currentLang, '')}#home` },
-  { label: t('nav.about'), href: `${getRelativeLocaleUrl(currentLang, '')}#about` },
-  { label: t('nav.work'), href: `${getRelativeLocaleUrl(currentLang, '')}#work` },
-  { label: t('nav.skills'), href: `${getRelativeLocaleUrl(currentLang, '')}#skills` },
+  { label: 'ホーム', href: '/#home' },
+  { label: '私について', href: '/#about' },
+  { label: '作品', href: '/#work' },
+  { label: 'スキル', href: '/#skills' },
 ];
 
-const homeHref = getRelativeLocaleUrl(currentLang, '');
-const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('//#', '/#');
+const homeHref = '/';
+const contactHref = '/#contact';
 ---
 
 <!-- 外枠：画面全幅（w-full）で固定し、z-50 で最前面へ -->
@@ -45,15 +39,13 @@ const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('
           href={contactHref}
           class="nav-link text-ink-soft hover:text-ink text-xm scrollbar-track-orange-50 font-mono tracking-wide uppercase transition-colors"
         >
-          {t('nav.contact')}
+          お問い合わせ
         </a>
-        <LanguagePicker />
         <ThemeToggle />
       </nav>
 
       {/* Mobile Controls */}
       <div class="flex items-center gap-2 sm:hidden">
-        <LanguagePicker />
         <ThemeToggle />
         <button
           type="button"
@@ -115,7 +107,7 @@ const contactHref = `${getRelativeLocaleUrl(currentLang, '')}#contact`.replace('
           href={contactHref}
           class="nav-link text-ink-soft hover:text-ink py-1.5 font-mono text-sm tracking-wide uppercase transition-colors"
         >
-          {t('nav.contact')}
+          お問い合わせ
         </a>
       </div>
     </div>

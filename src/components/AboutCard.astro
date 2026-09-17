@@ -1,11 +1,6 @@
 ---
 import SectionHeading from '@/components/SectionHeading.astro';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import ProfileImage from '@/components/ProfileImage.astro';
-
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 ---
 
 <section
@@ -13,17 +8,17 @@ const t = useTranslations(currentLang);
   class="border-line bg-paper/40 rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12"
 >
   <ProfileImage />
-  <SectionHeading eyebrow={t('home.aboutEyebrow')} />
+  <SectionHeading eyebrow="私について" />
 
   <p class="text-ink-soft mt-4 text-[1.25rem] leading-relaxed">
-    {t('site.description')}
+    Webサイトの受託運用（3年）軸に、デザインから実装・改善まで対応。異業種で培った確実な作業精度とユーザー視点で、成果につながるサイトを構築します。
   </p>
   <div class="border-line/60 mt-8 border-t pt-6">
     <a
-      href={getRelativeLocaleUrl(currentLang, 'about')}
+      href="/about"
       class="group border-line bg-paper/60 text-ink inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium shadow-xs transition-all duration-300 hover:border-[#7b7bff] hover:bg-[#7b7bff] hover:text-white hover:shadow-md"
     >
-      <span>{t('home.aboutMore')}</span>
+      <span>私の仕事のやり方についてもっと詳しく知る</span>
       <svg
         class="text-ink-soft h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white"
         fill="none"

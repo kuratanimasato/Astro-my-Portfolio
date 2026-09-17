@@ -5,8 +5,6 @@ import Button from '@/components/Button.astro';
 import { formatDate } from '@/utils/formatDate';
 import ImageSlider from '@/components/ImageSlider.astro';
 
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-
 export async function getStaticPaths() {
   const entries = await getCollection('work', ({ data }) => !data.draft);
   return entries.map((entry) => ({
@@ -25,8 +23,6 @@ const { Content } = await render(entry);
 
 const sliderImages = images.length > 0 ? images : cover ? [cover] : [];
 
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 const formattedDate = formatDate(date);
 ---
 
@@ -34,8 +30,8 @@ const formattedDate = formatDate(date);
   <div class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
     <!-- 全体を囲む大きな枠 -->
     <article class="border-line bg-paper/40 rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12">
-      <a href="../" class="text-ink-soft hover:text-signal font-mono text-xs transition-colors">
-        {t('work.back')}
+      <a href="/work" class="text-ink-soft hover:text-signal font-mono text-xs transition-colors">
+        全ての作品一覧へ戻る
       </a>
 
       <!-- タイトル & サマリー（枠内に綺麗に収まるよう配置） -->

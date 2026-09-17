@@ -1,8 +1,6 @@
 ---
 import SectionHeading from '@/components/SectionHeading.astro';
 import WorkRow from '@/components/WorkRow.astro';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -11,16 +9,13 @@ interface Props {
 }
 
 const { allWorkCount, selectedWork } = Astro.props;
-
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 ---
 
 <section
   id="work"
   class="border-line bg-paper/40 rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12"
 >
-  <SectionHeading eyebrow={t('home.selectedWork')} />
+  <SectionHeading eyebrow="作品" />
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
     {
       selectedWork.map((entry, index) => (
@@ -34,10 +29,10 @@ const t = useTranslations(currentLang);
     allWorkCount > selectedWork.length && (
       <div class="border-line/60 mt-8 border-t pt-6">
         <a
-          href={getRelativeLocaleUrl(currentLang, 'work')}
+          href="/work"
           class="group border-line bg-paper/60 text-ink inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium shadow-xs transition-all duration-300 hover:border-[#7b7bff] hover:bg-[#7b7bff] hover:text-white hover:shadow-md"
         >
-          <span>{t('home.viewAll')}</span>
+          <span>全ての作品を見る</span>
           <svg
             class="text-ink-soft h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white"
             fill="none"

@@ -2,13 +2,13 @@
 // and SEO defaults all read from here instead of hardcoding copy.
 export const SITE = {
   name: 'Masato Portfolio',
-  role: 'site.role',
+  role: '人や地域の課題をIT・Web・AIの力で解決する。',
   email: 'tyutyumasato@gmail.com',
   tagline: 'Portfolio Masato kuratani',
-  description: 'site.description',
+  description:
+    'Webサイトの受託運用（3年）軸に、デザインから実装・改善まで対応。異業種で培った確実な作業精度とユーザー視点で、成果につながるサイトを構築します。',
   status: '',
   social: [{ label: 'GitHub', href: 'https://github.com/kuratanimasato' }], // ← 必要に応じてユーザー名を変更してください
-  locale: 'ja',
 } as const;
 
 export const NAV_LINKS = [

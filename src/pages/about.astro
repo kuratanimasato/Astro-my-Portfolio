@@ -2,21 +2,15 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
 import { SITE } from '@/site.config';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 ---
 
-<BaseLayout title="About" description={`A bit about ${SITE.name} and how they work.`}>
+<BaseLayout title="私について" description={`${SITE.name}の仕事について`}>
   <section class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
     <article class="border-line bg-paper/40 rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12">
-      <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">
-        {t('about.eyebrow')}
-      </p>
+      <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">私について</p>
 
       <h1 class="font-display text-ink max-w-xl text-3xl font-medium sm:text-4xl">
-        {t('site.role')}
+        {SITE.role}
       </h1>
 
       <div class="prose prose-sm sm:prose-base mt-8 max-w-none">
@@ -46,9 +40,7 @@ const t = useTranslations(currentLang);
       </div>
 
       <div class="border-line mt-10 border-t pt-8">
-        <Button href={`mailto:${SITE.email}`}>
-          {t('about.contact')}
-        </Button>
+        <Button href={`mailto:${SITE.email}`}> 連絡を取る </Button>
       </div>
     </article>
   </section>

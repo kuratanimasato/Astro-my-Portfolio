@@ -7,15 +7,10 @@ import AboutCard from '@/components/AboutCard.astro';
 import WorkSection from '@/components/WorkSection.astro';
 import SkillsCard from '@/components/SkillsCard.astro';
 import ContactCard from '@/components/ContactCard.astro';
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import HeroGeometry from '@/components/HeroGeometry.astro';
 import Scroll from '@/components/Scroll.astro';
 import WorkButton from '@/components/Work.Button.astro';
 import TagLine from '@/components/TagLine.astro';
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
-
 const allWork = await getCollection('work', ({ data }) => !data.draft);
 const sorted = [...allWork].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const featured = sorted.filter((entry) => entry.data.featured);
