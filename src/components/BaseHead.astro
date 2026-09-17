@@ -25,7 +25,7 @@ const socialImage = new URL(image || '/og-image.png', Astro.site);
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 <meta name="author" content={SITE.name} />
-
+<ClientRouter fallback="swap" />
 {/* Canonical URL */}
 <link rel="canonical" href={canonicalURL} />
 

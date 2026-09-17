@@ -54,7 +54,6 @@ const formattedDate = formatDate(date);
       <div class="overflow-hidden rounded-2xl">
         <ImageSlider images={sliderImages} title={title} alt={`${title}の制作実績`} />
       </div>
-
       <!-- メタ情報 -->
       <dl
         class="border-line text-ink-soft mt-8 flex flex-wrap gap-x-8 gap-y-2 border-y py-4 font-mono text-xs"
@@ -82,12 +81,12 @@ const formattedDate = formatDate(date);
           <div class="border-line mt-10 flex flex-wrap gap-3 border-t pt-8">
             {url && (
               <Button href={url} variant="solid">
-                Visit live →
+                リンクを見る →
               </Button>
             )}
             {repo && (
               <Button href={repo} variant="ghost">
-                View source
+                ソースコード
               </Button>
             )}
           </div>

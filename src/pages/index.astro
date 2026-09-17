@@ -9,7 +9,10 @@ import SkillsCard from '@/components/SkillsCard.astro';
 import ContactCard from '@/components/ContactCard.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-
+import HeroGeometry from '@/components/HeroGeometry.astro';
+import Scroll from '@/components/Scroll.astro';
+import WorkButton from '@/components/Work.Button.astro';
+import TagLine from '@/components/TagLine.astro';
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
@@ -21,22 +24,19 @@ const selected = [...featured, ...rest].slice(0, 3);
 ---
 
 <BaseLayout title={SITE.name}>
+  <!-- 画面全体を中央寄せ＆最大幅（max-w-6xl または max-w-5xl）で囲む -->
   <div class="mx-auto max-w-6xl space-y-12 px-4 py-8 sm:space-y-16 sm:px-6">
     <!-- HERO SECTION -->
-    <section id="home" class="flex min-h-[calc(100vh-5rem)] items-center px-2 py-20">
+    <!-- relative を追加し、Scroll や HeroGeometry の基準にします -->
+    <section id="home" class="relative flex min-h-[calc(100vh-5rem)] items-center px-2 py-20">
+      <HeroGeometry />
       <div>
-        <h1
-          class="font-display text-ink max-w-3xl text-5xl leading-[1.1] font-medium sm:text-6xl lg:text-7xl"
-        >
-          {SITE.tagline}
-        </h1>
-
-        <div class="mt-8 flex flex-wrap items-center gap-3">
-          <Button href={getRelativeLocaleUrl(currentLang, 'work')} variant="solid">
-            {t('home.viewWork')}
-          </Button>
-        </div>
+        <TagLine />
+        <WorkButton />
       </div>
+
+      <!-- スクロールダウン指示をヒーローセクションの中に配置 -->
+      <Scroll />
     </section>
 
     <!-- ABOUT SECTION -->
@@ -50,5 +50,5 @@ const selected = [...featured, ...rest].slice(0, 3);
 
     <!-- CONTACT SECTION -->
     <ContactCard />
-  </div>
+  </div><!-- ★すべてのセクションを包んだ上でここで閉じる -->
 </BaseLayout>

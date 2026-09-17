@@ -35,8 +35,10 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
+    "@types/three": "^0.186.0",
     "aos": "^2.3.4",
-    "astro": "^7.0.4"
+    "astro": "^7.0.4",
+    "three": "^0.186.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",

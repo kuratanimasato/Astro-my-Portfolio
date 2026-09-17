@@ -10,27 +10,46 @@ const t = useTranslations(currentLang);
 
 <BaseLayout title="About" description={`A bit about ${SITE.name} and how they work.`}>
   <section class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
-    <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">
-      {t('about.eyebrow')}
-    </p>
+    <article class="border-line bg-paper/40 rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12">
+      <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">
+        {t('about.eyebrow')}
+      </p>
 
-    <h1 class="font-display text-ink max-w-xl text-3xl font-medium sm:text-4xl">
-      {t('site.role')}
-    </h1>
+      <h1 class="font-display text-ink max-w-xl text-3xl font-medium sm:text-4xl">
+        {t('site.role')}
+      </h1>
 
-    <div class="prose prose-sm sm:prose-base mt-8 max-w-xl">
-      <p>
-        私はほとんどのプロジェクトを、問題の最小単位、つまり実際に重要な1つの画面、1つのフロー、または1つの修正点を見つけることから始め、それを最初に適切に構築してから、徐々に範囲を広げていきます。
-      </p>
-      <p>
-        それは通常、キックオフ資料で約束された機能よりも少ない機能しか搭載せず、ユーザーが常に操作する部分、つまり読み込み時間、初期状態、エラーメッセージなど、ソフトウェアの使いやすさを静かに左右する要素に重点を置くことを意味します。
-      </p>
-      <p>
-        クライアント業務や製品開発業務以外では、いくつかの小規模なオープンソースツールを管理しており、それらを開発する過程で学んだことを時折メモにまとめています。
-      </p>
-    </div>
-    <Button href={`mailto:${SITE.email}`} class="mt-10">
-      {t('about.contact')}
-    </Button>
+      <div class="prose prose-sm sm:prose-base mt-8 max-w-none">
+        <p class="text-ink-soft text-base leading-relaxed">
+          私の仕事は、単にWebサイトを作ったりコードを書いたりすることではありません。地域で事業を営む事業者様や、現場で困りごとを抱える「人」の課題に寄り添い、IT・Web・AI技術を最適に活用して実効性のある解決策を提供することです。
+        </p>
+        <p class="text-ink-soft text-base leading-relaxed">
+          そのために、日々の業務やプロジェクトでは以下の姿勢を徹底しています。
+        </p>
+
+        <h2 mt-10 mb-4 text-2xl font-bold text-ink sm:text-3xl>課題の最小単位から紐解く</h2>
+        <p class="text-ink-soft text-base leading-relaxed">
+          派手な機能をやみくもに追加するのではなく、「現場で何が滞っているか」「ユーザーがどこで迷っているか」という本質的な課題（1つの画面、1つの入力フロー、1つの改善点）を特定することから始めます。そこを確実に解決・最適化してから、着実に範囲を広げていきます。
+        </p>
+
+        <h2 mt-10 mb-4 text-2xl font-bold text-ink sm:text-3xl>徹底した品質意識とユーザー視点</h2>
+        <p class="text-ink-soft text-base leading-relaxed">
+          自動車製造業で培った「作業精度・品質管理意識」と、福祉現場で培った「相手の立場に立った対人支援力」が私の根幹です。ページの読み込み速度、エラー時の分かりやすい表示、迷わないUI設計など、静かに体験を支える細部にこだわり、確実な品質をお約束します。
+        </p>
+
+        <h2 mt-10 mb-4 text-2xl font-bold text-ink sm:text-3xl>
+          技術のキャッチアップと継続的な伴走
+        </h2>
+        <p class="text-ink-soft text-base leading-relaxed">
+          実家の賃貸物件におけるWebサイト構築・運用（3年間）を通じて、空室対策や認知度向上につながる改善活動を継続してきました。AstroやCloudflareといった高速な最新Web技術の採用から、AIを活用した業務効率化まで柔軟に取り入れ、地域事業者の発展に長期的・自律的に貢献します。
+        </p>
+      </div>
+
+      <div class="border-line mt-10 border-t pt-8">
+        <Button href={`mailto:${SITE.email}`}>
+          {t('about.contact')}
+        </Button>
+      </div>
+    </article>
   </section>
 </BaseLayout>

@@ -13,7 +13,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   );
 
   return paginate(allWork, {
-    pageSize: 6,
+    pageSize: 8,
   });
 };
 
@@ -32,7 +32,7 @@ interface Props {
   description="Selected projects in product design and frontend engineering."
 >
   <section class="mx-auto max-w-7xl px-6 pt-16 pb-24 sm:pt-24">
-    <SectionHeading eyebrow={t('work.allWork')} count={page.total} />
+    <SectionHeading eyebrow={t('work.allWork')} />
 
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       {page.data.map((entry) => <WorkRow entry={entry} />)}

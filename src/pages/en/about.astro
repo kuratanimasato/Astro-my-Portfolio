@@ -6,54 +6,68 @@ import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
-
-const tools = ['TypeScript', 'Astro', 'React', 'Figma', 'Tailwind CSS', 'Node.js'];
 ---
 
 <BaseLayout title="About" description={`A bit about ${SITE.name} and how they work.`}>
   <section class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
-    <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">
-      {t('about.eyebrow')}
-    </p>
-
-    <h1 class="font-display text-ink max-w-xl text-3xl font-medium sm:text-4xl">
-      {t('site.role')}
-    </h1>
-
-    <div class="prose prose-sm sm:prose-base mt-8 max-w-xl">
-      <p>
-        I start most projects by trying to find the smallest version of the problem — the one
-        screen, one flow, or one fix that actually matters — and build that first, properly, before
-        expanding outward.
+    <article class="border-line bg-paper/40 rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12">
+      <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">
+        {t('about.eyebrow')}
       </p>
-      <p>
-        That usually means fewer features than a kickoff deck promises, and more attention to the
-        parts people interact with constantly: load times, empty states, error messages, the things
-        that quietly decide whether software feels good to use.
-      </p>
-      <p>
-        Outside of client and product work, I maintain a couple of small open-source tools and write
-        occasional notes on what I learn building them.
-      </p>
-    </div>
 
-    <div class="mt-10">
-      <p class="text-ink-soft mb-3 font-mono text-xs tracking-[0.2em] uppercase">
-        {t('about.tools')}
-      </p>
-      <ul class="flex flex-wrap gap-2">
-        {
-          tools.map((tool) => (
-            <li class="border-line text-ink-soft rounded-full border px-3 py-1 font-mono text-xs">
-              {tool}
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+      <h1 class="font-display text-ink max-w-xl text-3xl font-medium sm:text-4xl">
+        {t('site.role')}
+      </h1>
 
-    <Button href={`mailto:${SITE.email}`} class="mt-10">
-      {t('about.contact')}
-    </Button>
+      <div class="prose prose-sm sm:prose-base mt-8 max-w-none">
+        <p class="text-ink-soft text-base leading-relaxed">
+          My work goes beyond simply building websites or writing code. I partner with local
+          businesses and individuals facing everyday challenges, leveraging IT, Web, and AI
+          technologies to deliver effective, real-world solutions.
+        </p>
+        <p class="text-ink-soft text-base leading-relaxed">
+          To achieve this, I strictly adhere to the following principles in my daily work and
+          projects:
+        </p>
+
+        <h2 class="text-ink mt-10 mb-4 text-2xl font-bold sm:text-3xl">
+          Starting from the Smallest Unit of Problem
+        </h2>
+        <p class="text-ink-soft text-base leading-relaxed">
+          Rather than unnecessarily adding flashy features, I begin by identifying the core
+          issues—what bottlenecks exist on-site and where users get confused—focusing on a single
+          screen, a single input flow, or a single point of improvement. Only after resolving and
+          optimizing these essential areas do I steadily expand the scope.
+        </p>
+
+        <h2 class="text-ink mt-10 mb-4 text-2xl font-bold sm:text-3xl">
+          Uncompromising Quality & User-Centric Mindset
+        </h2>
+        <p class="text-ink-soft text-base leading-relaxed">
+          My foundation is built on the precision and quality control expertise developed in
+          automotive manufacturing, combined with person-centered support skills gained in the
+          social welfare sector. I guarantee reliable quality by focusing on the quiet details that
+          define user experience: fast load speeds, intuitive error handling, and clear, effortless
+          UI navigation.
+        </p>
+
+        <h2 class="text-ink mt-10 mb-4 text-2xl font-bold sm:text-3xl">
+          Continuous Learning & Long-Term Partnership
+        </h2>
+        <p class="text-ink-soft text-base leading-relaxed">
+          Through three years of building and operating a real estate website for a family-owned
+          property, I have driven ongoing improvements focused on vacancy reduction and brand
+          awareness. By flexibly adopting modern web technologies like Astro and Cloudflare, along
+          with AI-driven operational efficiency, I deliver long-term, autonomous value to local
+          business growth.
+        </p>
+      </div>
+
+      <div class="border-line mt-10 border-t pt-8">
+        <Button href={`mailto:${SITE.email}`}>
+          {t('about.contact')}
+        </Button>
+      </div>
+    </article>
   </section>
 </BaseLayout>

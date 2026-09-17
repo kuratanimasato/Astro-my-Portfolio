@@ -1,0 +1,20 @@
+---
+import { SITE } from '@/site.config';
+import { getCollection } from 'astro:content';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const allWork = await getCollection('work', ({ data }) => !data.draft);
+const sorted = [...allWork].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featured = sorted.filter((entry) => entry.data.featured);
+const rest = sorted.filter((entry) => !entry.data.featured);
+const selected = [...featured, ...rest].slice(0, 3);
+---
+
+<h1
+  class="font-display text-ink max-w-3xl text-5xl leading-[1.1] font-medium sm:text-6xl lg:text-7xl"
+>
+  {SITE.tagline}
+</h1>

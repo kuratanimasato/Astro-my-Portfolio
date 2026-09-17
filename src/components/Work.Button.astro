@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Button from '@/components/Button.astro';
+
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const allWork = await getCollection('work', ({ data }) => !data.draft);
+const sorted = [...allWork].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featured = sorted.filter((entry) => entry.data.featured);
+const rest = sorted.filter((entry) => !entry.data.featured);
+const selected = [...featured, ...rest].slice(0, 3);
+---
+
+<div class="mt-8 flex flex-wrap items-center gap-3">
+  <Button
+    class="hover:text-white hover:shadow-md"
+    href={getRelativeLocaleUrl(currentLang, 'work')}
+    variant="solid"
+  >
+    {t('home.viewWork')}
+  </Button>
+</div>

@@ -7,7 +7,7 @@ export const SITE = {
   tagline: 'Portfolio Masato kuratani',
   description: 'site.description',
   status: '',
-  social: [{ label: 'GitHub', href: 'https://github.com/your-username' }], // ← 必要に応じてユーザー名を変更してください
+  social: [{ label: 'GitHub', href: 'https://github.com/kuratanimasato' }], // ← 必要に応じてユーザー名を変更してください
   locale: 'ja',
 } as const;
 
@@ -21,14 +21,25 @@ export const NAV_LINKS = [
 export const SKILL_CATEGORIES = [
   {
     title: 'Frontend',
-    skills: ['HTML5 / CSS3', 'JavaScript', 'TypeScript', 'Astro', 'React', 'Tailwind CSS'],
+    skills: [
+      'HTML5 / CSS3',
+      'JavaScript',
+      'TypeScript',
+      'Astro',
+      'Svelte/Svektekit',
+      'Tailwind CSS',
+    ],
+  },
+  {
+    title: 'Backend',
+    skills: ['PHP', 'MySQL', 'WordPress'],
   },
   {
     title: 'Design & Prototyping',
-    skills: ['Figma', 'UI/UX Design', 'Design Systems', 'Wireframing'],
+    skills: ['Figma', 'AdobePhotoshop', 'AdobeIllustrator', 'Afinity'],
   },
   {
     title: 'Tools & Workflow',
-    skills: ['Git / GitHub', 'Node.js', 'VS Code', 'Vercel'],
+    skills: ['Git / GitHub', 'Node.js', 'VS Code', 'Vercel', 'Zed'],
   },
 ];

@@ -5,7 +5,7 @@ import { SITE } from '@/site.config';
 import '@/styles/global.css';
 import BaseHead from '@/components/BaseHead.astro';
 import AOS from '@/components/AOS.astro';
-
+import PageLoader from '@/components/PageLoader.astro';
 interface Props {
   title: string;
   description?: string;
@@ -22,7 +22,12 @@ const currentLocale = Astro.currentLocale || SITE.locale;
     <BaseHead title={title} description={description} image={image} />
   </head>
   <body id="top" class="bg-paper text-ink">
-    <div class="aurora-bg" aria-hidden="true"></div>
+    <PageLoader />
+    <div
+      class="aurora-bg pointer-events-none absolute top-0 left-1/2 -z-10 h-[600px] w-full max-w-7xl -translate-x-1/2 bg-gradient-to-b from-sky-200/40 via-purple-200/30 to-transparent blur-3xl dark:from-sky-950/30 dark:via-purple-950/20"
+      aria-hidden="true"
+    >
+    </div>
     <Header />
     <main>
       <slot />
