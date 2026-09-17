@@ -2,17 +2,20 @@
 import { SITE } from '@/site.config';
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Button from '@/components/Button.astro';
 import AboutCard from '@/components/AboutCard.astro';
 import WorkSection from '@/components/WorkSection.astro';
-import SkillsCard from '@/components/SkillsCard.astro';
+import SkillsCard from '@/components/SkillsCardItem.astro';
 import ContactCard from '@/components/ContactCard.astro';
 import HeroGeometry from '@/components/HeroGeometry.astro';
 import Scroll from '@/components/Scroll.astro';
 import WorkButton from '@/components/Work.Button.astro';
 import TagLine from '@/components/TagLine.astro';
 const allWork = await getCollection('work', ({ data }) => !data.draft);
-const sorted = [...allWork].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const sorted = [...allWork].sort((a, b) => {
+  const timeA = a.data.date ? a.data.date.valueOf() : 0;
+  const timeB = b.data.date ? b.data.date.valueOf() : 0;
+  return timeB - timeA;
+});
 const featured = sorted.filter((entry) => entry.data.featured);
 const rest = sorted.filter((entry) => !entry.data.featured);
 const selected = [...featured, ...rest].slice(0, 3);
@@ -45,5 +48,5 @@ const selected = [...featured, ...rest].slice(0, 3);
 
     <!-- CONTACT SECTION -->
     <ContactCard />
-  </div><!-- ★すべてのセクションを包んだ上でここで閉じる -->
+  </div>
 </BaseLayout>

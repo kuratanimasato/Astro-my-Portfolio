@@ -3,7 +3,14 @@ import { getCollection } from 'astro:content';
 import Button from '@/components/Button.astro';
 
 const allWork = await getCollection('work', ({ data }) => !data.draft);
-const sorted = [...allWork].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// date が存在しない場合は 0（一番古い扱い）として安全にソートします
+const sorted = [...allWork].sort((a, b) => {
+  const timeA = a.data.date ? a.data.date.valueOf() : 0;
+  const timeB = b.data.date ? b.data.date.valueOf() : 0;
+  return timeB - timeA;
+});
+
 const featured = sorted.filter((entry) => entry.data.featured);
 const rest = sorted.filter((entry) => !entry.data.featured);
 const selected = [...featured, ...rest].slice(0, 3);

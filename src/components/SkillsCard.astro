@@ -1,32 +1,33 @@
 ---
-import SectionHeading from '@/components/SectionHeading.astro';
-import { SKILL_CATEGORIES } from '@/site.config';
+export interface Props {
+  name: string;
+  level: number;
+  icon: string;
+}
+
+const { name, level, icon } = Astro.props;
 ---
 
-<section
-  id="skills"
-  class="border-line bg-paper/40 min-h-[40vh] rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12"
+<div
+  class="border-line bg-paper/60 hover:border-signal/50 relative flex items-center gap-3 rounded-xl border p-3 shadow-xs transition-all duration-200 hover:-translate-y-0.5"
 >
-  <SectionHeading eyebrow="スキル" />
-
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-    {
-      SKILL_CATEGORIES.map((category, index) => (
-        <div
-          class="border-line bg-paper/80 flex flex-col rounded-2xl border p-6 shadow-sm"
-          data-aos="fade-up"
-          data-aos-delay={index * 300}
-        >
-          <h3 class="font-display text-ink mb-4 text-lg font-medium">{category.title}</h3>
-          <ul class="flex flex-wrap gap-2">
-            {category.skills.map((skill) => (
-              <li class="border-line text-ink-soft bg-paper rounded-lg border px-3 py-1.5 font-mono text-xl">
-                {skill}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))
-    }
+  <!-- アイコン表示領域: bg-white / dark:bg-white にしてテーマに関わらず白背景を確保 -->
+  <div
+    class="border-line/50 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border bg-white p-2 shadow-inner"
+  >
+    <img src={icon} alt={name} class="h-full w-full object-contain" />
   </div>
-</section>
+
+  <!-- スキル名 & ★評価 -->
+  <div class="flex flex-col justify-between overflow-hidden">
+    <span class="text-ink truncate text-xs font-medium sm:text-sm">{name}</span>
+
+    <div class="mt-1 flex items-center gap-0.5 text-xs">
+      {
+        [1, 2, 3].map((star) => (
+          <span class={star <= level ? 'text-amber-400' : 'text-line'}>★</span>
+        ))
+      }
+    </div>
+  </div>
+</div>

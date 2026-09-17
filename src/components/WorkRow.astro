@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { formatDate } from '@/utils/formatDate';
 import { Image } from 'astro:assets';
 
 interface Props {
@@ -8,10 +7,9 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, summary, date, tags, cover } = entry.data;
+const { title, summary, tags, cover } = entry.data;
 
 const workUrl = `/work/${entry.id}`;
-const stamp = formatDate(date, 'compact');
 ---
 
 <a

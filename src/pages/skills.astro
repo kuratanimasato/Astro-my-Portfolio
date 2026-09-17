@@ -1,43 +1,38 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-
-// 表示したいスキルのリスト（カテゴリ分けの例）
-const skillCategories = [
-  {
-    title: 'Frontend / Frameworks',
-    items: ['HTML / CSS', 'JavaScript', 'TypeScript', 'Astro', 'React', 'Tailwind CSS'],
-  },
-  {
-    title: 'Design / Tools',
-    items: ['Figma', 'UI/UX Design', 'Wireframing', 'Prototyping'],
-  },
-  {
-    title: 'Other',
-    items: ['Git', 'GitHub', 'Node.js', 'Vercel'],
-  },
-];
+import { SKILL_CATEGORIES } from '@/site.config';
 ---
 
-<BaseLayout title="スキル" description="私が普段使用している技術やツールの一覧です。">
-  <section class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
-    <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">スキル</p>
-
-    <h1 class="font-display text-ink mb-12 max-w-xl text-3xl font-medium sm:text-4xl">スキル</h1>
-
-    <div class="space-y-12">
+<BaseLayout title="Skill" description="私が普段使用している技術やツールの一覧です。">
+  <section class="mx-auto max-w-4xl px-6 pt-16 pb-24 sm:pt-24">
+    <h1 class="text-ink-soft scroll mt-3.5 font-mono text-xl tracking-[0.2em] uppercase">スキル</h1>
+    <div class="space-y-10">
       {
-        skillCategories.map((category) => (
+        SKILL_CATEGORIES.map((category) => (
           <div>
             <h2 class="text-ink border-line mb-4 border-b pb-2 text-lg font-medium">
               {category.title}
             </h2>
-            <ul class="mt-4 flex flex-wrap gap-3">
-              {category.items.map((item) => (
-                <li class="border-line bg-paper/50 text-ink-soft hover:text-ink hover:border-signal rounded-full border px-4 py-1.5 text-sm transition-colors">
-                  {item}
-                </li>
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+              {category.skills.map((item) => (
+                <div class="border-line bg-paper/60 hover:border-signal/50 relative flex items-center gap-3 rounded-xl border p-3 shadow-xs transition-all duration-200 hover:-translate-y-0.5">
+                  <div class="border-line/50 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border bg-white p-2 shadow-xs">
+                    <img src={item.icon} alt={item.name} class="h-full w-full object-contain" />
+                  </div>
+                  <div class="flex flex-col justify-between overflow-hidden">
+                    <span class="text-ink truncate text-xs font-medium sm:text-sm">
+                      {item.name}
+                    </span>
+
+                    <div class="mt-1 flex items-center gap-0.5 text-xs">
+                      {[1, 2, 3].map((star) => (
+                        <span class={star <= item.level ? 'text-amber-400' : 'text-line'}>★</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         ))
       }

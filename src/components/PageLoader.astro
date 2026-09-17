@@ -13,35 +13,32 @@
 </div>
 
 <script>
+  const HOME_VISITED_KEY = 'visitedHome';
+
   const initLoader = () => {
     const loader = document.getElementById('page-loader');
     if (!loader) return;
 
-    // ① トップページ（/ や /ja/ など）以外は即座に非表示
     const isHomePage =
       window.location.pathname === '/' ||
       window.location.pathname === '/ja' ||
       window.location.pathname === '/ja/';
 
-    // ② すでにこのセッションでローディングを表示済みかチェック
-    const hasLoaded = sessionStorage.getItem('hasLoadedTopPage');
-
-    if (!isHomePage || hasLoaded) {
+    if (!isHomePage || sessionStorage.getItem(HOME_VISITED_KEY) === 'true') {
       loader.style.display = 'none';
       return;
     }
-    // ③ トップページの初回読み込み時のみ実行
+
     const hideLoader = () => {
-      // 既に非表示処理が始まっていたら二重実行しない
       if (loader.classList.contains('opacity-0')) return;
       loader.classList.add('opacity-0');
-      sessionStorage.setItem('hasLoadedTopPage', 'true');
 
       setTimeout(() => {
         loader.style.display = 'none';
-      }, 500); // 500ms（0.5秒）かけてフェードアウト
+        sessionStorage.setItem(HOME_VISITED_KEY, 'true');
+      }, 500);
     };
-    // 最低でも800msはローダーを表示させて質感を見せつつ、1.2秒後には確実に非表示化
+
     setTimeout(hideLoader, 1000);
   };
 

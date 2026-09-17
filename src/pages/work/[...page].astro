@@ -7,9 +7,11 @@ import WorkRow from '@/components/WorkRow.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-  const allWork = (await getCollection('work', ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-  );
+  const allWork = (await getCollection('work', ({ data }) => !data.draft)).sort((a, b) => {
+    const timeA = a.data.date ? a.data.date.valueOf() : 0;
+    const timeB = b.data.date ? b.data.date.valueOf() : 0;
+    return timeB - timeA;
+  });
 
   return paginate(allWork, {
     pageSize: 8,

@@ -26,7 +26,7 @@ const { allWorkCount, selectedWork } = Astro.props;
     }
   </div>
   {
-    allWorkCount > selectedWork.length && (
+    allWorkCount > 0 && (
       <div class="border-line/60 mt-8 border-t pt-6">
         <a
           href="/work"

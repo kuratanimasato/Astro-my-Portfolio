@@ -1,9 +1,8 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
-import { formatDate } from '@/utils/formatDate';
-import ImageSlider from '@/components/ImageSlider.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('work', ({ data }) => !data.draft);
@@ -18,12 +17,8 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, summary, role, date, tags = [], url, repo, cover, images = [] } = entry.data;
+const { title, summary, role, tags = [], url, repo, cover } = entry.data;
 const { Content } = await render(entry);
-
-const sliderImages = images.length > 0 ? images : cover ? [cover] : [];
-
-const formattedDate = formatDate(date);
 ---
 
 <BaseLayout title={title} description={summary}>
@@ -46,16 +41,24 @@ const formattedDate = formatDate(date);
         }
       </header>
 
-      <!-- 画像スライダー -->
-      <div class="overflow-hidden rounded-2xl">
-        <ImageSlider images={sliderImages} title={title} alt={`${title}の制作実績`} />
-      </div>
+      <!-- メイン画像 -->
+      {
+        cover && (
+          <div class="overflow-hidden rounded-2xl">
+            <Image
+              src={cover}
+              alt={`${title}の制作実績`}
+              class="h-auto max-h-[70vh] w-full rounded-2xl object-cover"
+              loading="eager"
+            />
+          </div>
+        )
+      }
       <!-- メタ情報 -->
       <dl
         class="border-line text-ink-soft mt-8 flex flex-wrap gap-x-8 gap-y-2 border-y py-4 font-mono text-xs"
       >
         <div><dt class="inline">Role —</dt><dd class="inline">{role}</dd></div>
-        <div><dt class="inline">Date —</dt><dd class="inline">{formattedDate}</dd></div>
         {
           tags.length > 0 && (
             <div>

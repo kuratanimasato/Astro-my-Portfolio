@@ -8,7 +8,7 @@ export const SITE = {
   description:
     'Webサイトの受託運用（3年）軸に、デザインから実装・改善まで対応。異業種で培った確実な作業精度とユーザー視点で、成果につながるサイトを構築します。',
   status: '',
-  social: [{ label: 'GitHub', href: 'https://github.com/kuratanimasato' }], // ← 必要に応じてユーザー名を変更してください
+  social: [{ label: 'GitHub', href: 'https://github.com/kuratanimasato' }],
 } as const;
 
 export const NAV_LINKS = [
@@ -20,26 +20,113 @@ export const NAV_LINKS = [
 
 export const SKILL_CATEGORIES = [
   {
-    title: 'Frontend',
+    title: 'Frontend / Frameworks',
     skills: [
-      'HTML5 / CSS3',
-      'JavaScript',
-      'TypeScript',
-      'Astro',
-      'Svelte/Svektekit',
-      'Tailwind CSS',
+      {
+        name: 'HTML5 / CSS3',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+      },
+      {
+        name: 'JavaScript',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
+      },
+      {
+        name: 'TypeScript',
+        level: 2,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
+      },
+      {
+        name: 'Astro',
+        level: 2,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg',
+      },
+      {
+        name: 'Svelte / SvelteKit',
+        level: 2,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg',
+      },
+      {
+        name: 'Tailwind CSS',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg',
+      },
     ],
   },
   {
     title: 'Backend',
-    skills: ['PHP', 'MySQL', 'WordPress'],
+    skills: [
+      {
+        name: 'PHP',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg',
+      },
+      {
+        name: 'MySQL',
+        level: 2,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+      },
+      {
+        name: 'WordPress',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg',
+      },
+    ],
   },
   {
-    title: 'Design & Prototyping',
-    skills: ['Figma', 'AdobePhotoshop', 'AdobeIllustrator', 'Afinity'],
+    title: 'Design / Tools',
+    skills: [
+      {
+        name: 'Figma',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',
+      },
+      {
+        name: 'Photoshop',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg',
+      },
+      {
+        name: 'Illustrator',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg',
+      },
+      {
+        name: 'Affinity',
+        level: 2,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg',
+      },
+    ],
   },
   {
-    title: 'Tools & Workflow',
-    skills: ['Git / GitHub', 'Node.js', 'VS Code', 'Vercel', 'Zed'],
+    title: 'Other',
+    skills: [
+      {
+        name: 'Git / GitHub',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+      },
+      {
+        name: 'Node.js',
+        level: 2,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+      },
+      {
+        name: 'VS Code',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg',
+      },
+      {
+        name: 'Vercel',
+        level: 2,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg',
+      },
+      {
+        name: 'Zed',
+        level: 2,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg',
+      },
+    ],
   },
 ];

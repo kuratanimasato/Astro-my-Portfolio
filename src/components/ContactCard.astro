@@ -1,6 +1,10 @@
 ---
 import SectionHeading from '@/components/SectionHeading.astro';
 import { SITE } from '@/site.config';
+
+// 回答者用（公開用）のGoogleフォームURL
+const GOOGLE_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSd_onvq-Qnm_wU6dBwpwlOZ1uTvt8PlDx4g6TW9EzFTG6beXA/viewform';
 ---
 
 <section
@@ -8,13 +12,37 @@ import { SITE } from '@/site.config';
   class="border-line bg-paper/40 min-h-[30vh] rounded-3xl border p-8 shadow-sm backdrop-blur sm:p-12"
 >
   <SectionHeading eyebrow="お問い合わせ" />
-  <p class="font-display text-ink max-w-lg text-2xl sm:text-3xl">
-    ご相談・お問い合わせはこちらから
+
+  <p class="text-ink-soft mt-3 text-sm leading-relaxed">
+    気になること・ご相談事などありましたら、お気軽にご連絡ください。
   </p>
-  <a
-    href={`mailto:${SITE.email}`}
-    class="text-signal mt-4 inline-flex items-center gap-2 font-mono hover:underline"
-  >
-    {SITE.email}
-  </a>
+
+  <!-- Googleフォームへのアクションボタン -->
+  <div class="mt-8">
+    <a
+      href={GOOGLE_FORM_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="border-line bg-paper text-ink hover:border-signal/50 hover:text-signal inline-flex items-center gap-2 rounded-xl border px-6 py-3.5 text-sm font-medium shadow-xs transition-all hover:-translate-y-0.5"
+    >
+      <span>お問い合わせフォームを開く</span>
+      <!-- 外部リンク用アイコン（SVG） -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="opacity-70"
+      >
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
+      </svg>
+    </a>
+  </div>
 </section>
