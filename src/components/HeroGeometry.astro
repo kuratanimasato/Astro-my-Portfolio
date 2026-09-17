@@ -5,7 +5,15 @@
 <script>
   import * as THREE from 'three';
 
+  let cleanup: (() => void) | null = null;
+
   const initHero3D = () => {
+    // 既存のループ・イベントリスナーがあればクリーンアップを実行
+    if (cleanup) {
+      cleanup();
+      cleanup = null;
+    }
+
     const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
     if (!canvas) return;
 
@@ -25,13 +33,13 @@
     // 幾何学オブジェクト（トーラス結び目 / TorusKnot）
     const geometry = new THREE.TorusKnotGeometry(1.2, 0.35, 128, 32);
     const material = new THREE.MeshPhysicalMaterial({
-      color: 0x818cf8, // パステル系のパープル/ブルー
+      color: 0x818cf8,
       roughness: 0.2,
       metalness: 0.1,
-      transmission: 0.6, // ガラスのような透明感
+      transmission: 0.6,
       ior: 1.5,
       thickness: 0.5,
-      wireframe: true, // ワイヤーフレーム表示にすると洗練されたモダンテック感が出ます
+      wireframe: true,
     });
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
@@ -67,7 +75,6 @@
     // アニメーションループ
     let animationFrameId: number;
     const animate = () => {
-      // ゆっくり自動回転 ＋ マウスの位置へ滑らかに傾く
       mesh.rotation.x += 0.003;
       mesh.rotation.y += 0.005;
 
@@ -80,15 +87,28 @@
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    // アクセシビリティ配慮（アニメーション軽減設定）
+    // アクセシビリティ配慮
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       animate();
     } else {
       renderer.render(scene, camera);
     }
+
+    // クリーンアップ関数の定義（破棄時に呼び出し）
+    cleanup = () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
+    };
   };
 
-  // Astro View Transitions 対応
+  // ページ初期化とView Transitions遷移時の破棄処理
   initHero3D();
   document.addEventListener('astro:page-load', initHero3D);
+  document.addEventListener('astro:before-swap', () => {
+    if (cleanup) cleanup();
+  });
 </script>

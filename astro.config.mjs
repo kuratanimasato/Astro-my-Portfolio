@@ -16,6 +16,9 @@ export default defineConfig({
   prefetch: true,
 
   vite: {
+    build: {
+      chunkSizeWarningLimit: 1000,
+    },
     plugins: [tailwindcss()],
   },
 });

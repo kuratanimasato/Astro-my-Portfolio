@@ -1,16 +1,5 @@
 ---
 import { SITE } from '@/site.config';
-import { getCollection } from 'astro:content';
-
-const allWork = await getCollection('work', ({ data }) => !data.draft);
-const sorted = [...allWork].sort((a, b) => {
-  const timeA = a.data.date ? a.data.date.valueOf() : 0;
-  const timeB = b.data.date ? b.data.date.valueOf() : 0;
-  return timeB - timeA;
-});
-const featured = sorted.filter((entry) => entry.data.featured);
-const rest = sorted.filter((entry) => !entry.data.featured);
-const selected = [...featured, ...rest].slice(0, 3);
 ---
 
 <h1
