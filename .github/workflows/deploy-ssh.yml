@@ -10,24 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. リポジトリのコードを取得
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Node.js 環境のセットアップ
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
+          cache: npm
 
-      # 3. 依存関係のインストールと Astro のビルド
       - name: Install dependencies and Build
         run: |
           npm ci
           npm run build
 
-      # 4. ビルド生成物 (dist/) を REMOTE_PORT 10022 指定で rsync 転送
       - name: Deploy via SSH (rsync)
         uses: easingthemes/ssh-deploy@v5.0.0
         with:
@@ -35,6 +31,15 @@ jobs:
           REMOTE_HOST: ${{ secrets.SSH_HOSTNAME }}
           REMOTE_USER: ${{ secrets.SSH_USERNAME }}
           REMOTE_PORT: 10022
-          SOURCE: 'dist/'
-          TARGET: '/home/${{ secrets.SSH_USERNAME }}/kuratani-portfolio.work/public_html/'
-          ARGS: '-avzr --delete'
+          SOURCE: dist/
+          TARGET: /home/${{ secrets.SSH_USERNAME }}/kuratani-portfolio.work/public_html/
+          ARGS: '-avzr'
+
+      # デプロイ後に公開URLへ接続できるか確認
+      - name: Check Website
+        run: |
+          curl --fail --silent --show-error --location \
+            --retry 5 \
+            --retry-delay 5 \
+            --max-time 30 \
+            https://kuratani-portfolio.work/
