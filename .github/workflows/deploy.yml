@@ -1,0 +1,56 @@
+name: Deploy to Shin-Free (FTP)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. リポジトリ取得
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Node.jsセットアップ
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # 3. 依存関係をインストールしてAstroをビルド
+      - name: Install dependencies and Build
+        run: |
+          npm ci
+          npm run build
+
+      # 4. dist/ をFTPでアップロード
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /kuratani-portfolio.work/public_html/
+          local-dir: ./dist/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+
+      # 5. 公開URLを確認
+      - name: Check Website
+        run: |
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --location \
+            --retry 5 \
+            --retry-delay 5 \
+            --max-time 30 \
+            https://kuratani-portfolio.work/
