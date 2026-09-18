@@ -34,7 +34,8 @@
     "lint": "eslint .",
     "eslint": "npm run lint",
     "lint:fix": "eslint . --fix",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "deploy": "git add . && git commit -m 'Update site' && git push origin main"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
