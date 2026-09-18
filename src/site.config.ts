@@ -23,9 +23,14 @@ export const SKILL_CATEGORIES = [
     title: 'Frontend / Frameworks',
     skills: [
       {
-        name: 'HTML5 / CSS3',
+        name: 'HTML5',
         level: 3,
         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+      },
+      {
+        name: 'CSS',
+        level: 3,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
       },
       {
         name: 'JavaScript',
@@ -106,6 +111,11 @@ export const SKILL_CATEGORIES = [
         name: 'Git / GitHub',
         level: 3,
         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+      },
+      {
+        name: 'GitHub Actions',
+        level: 2,
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubactions/githubactions-original.svg',
       },
       {
         name: 'Node.js',
