@@ -24,6 +24,27 @@ jobs:
           npm ci
           npm run build
 
+      # SSH設定
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' '${{ secrets.SSH_PRIVATE_KEY }}' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p 10022 -H '${{ secrets.SSH_HOSTNAME }}' >> ~/.ssh/known_hosts
+
+      # SSH接続だけをテスト
+      - name: Test SSH connection
+        run: |
+          ssh -vvv \
+            -p 10022 \
+            -i ~/.ssh/deploy_key \
+            -o BatchMode=yes \
+            -o ConnectTimeout=20 \
+            -o StrictHostKeyChecking=yes \
+            '${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOSTNAME }}' \
+            'printf "SSH login succeeded\n"'
+
+      # rsyncによるデプロイ
       - name: Deploy via SSH (rsync)
         uses: easingthemes/ssh-deploy@v5.0.0
         with:
@@ -34,11 +55,16 @@ jobs:
           SOURCE: dist/
           TARGET: /home/${{ secrets.SSH_USERNAME }}/kuratani-portfolio.work/public_html/
           ARGS: '-avzr'
+          SSH_CMD_ARGS: '-o StrictHostKeyChecking=yes -o ConnectTimeout=20'
 
-      # デプロイ後に公開URLへ接続できるか確認
+      # 公開URLを確認
       - name: Check Website
         run: |
-          curl --fail --silent --show-error --location \
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --location \
             --retry 5 \
             --retry-delay 5 \
             --max-time 30 \
