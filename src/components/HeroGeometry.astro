@@ -1,14 +1,17 @@
 <!-- src/components/HeroGeometry.astro -->
 <div class="hero-3d-container pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-  <canvas id="hero-canvas" class="h-full w-full opacity-0 transition-opacity duration-700"></canvas>
+  <canvas
+    id="hero-canvas"
+    class:list={['absolute inset-0 h-full w-full', 'opacity-80']}
+    aria-hidden="true"></canvas>
 </div>
+
 <script>
   import * as THREE from 'three';
 
   let cleanup: (() => void) | null = null;
 
   const initHero3D = () => {
-    // 既存のループ・イベントリスナーがあればクリーンアップを実行
     if (cleanup) {
       cleanup();
       cleanup = null;
@@ -17,95 +20,89 @@
     const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
     if (!canvas) return;
 
-    // レンダラー設定
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // WebGL初期化エラーでスクリプトが停止するのを防止
+    try {
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      canvas.clientWidth / canvas.clientHeight,
-      0.1,
-      100,
-    );
-    camera.position.z = 6;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        45,
+        canvas.clientWidth / canvas.clientHeight || 1,
+        0.1,
+        100,
+      );
+      camera.position.z = 6;
 
-    // 幾何学オブジェクト（トーラス結び目 / TorusKnot）
-    const geometry = new THREE.TorusKnotGeometry(1.2, 0.35, 128, 32);
-    const material = new THREE.MeshPhysicalMaterial({
-      color: 0x818cf8,
-      roughness: 0.2,
-      metalness: 0.1,
-      transmission: 0.6,
-      ior: 1.5,
-      thickness: 0.5,
-      wireframe: true,
-    });
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+      const geometry = new THREE.TorusKnotGeometry(1.2, 0.35, 128, 32);
+      const material = new THREE.MeshPhysicalMaterial({
+        color: 0x818cf8,
+        roughness: 0.2,
+        metalness: 0.1,
+        transmission: 0.6,
+        ior: 1.5,
+        thickness: 0.5,
+        wireframe: true,
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
 
-    // ライティング
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
-    scene.add(ambientLight);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+      scene.add(ambientLight);
 
-    const pointLight = new THREE.PointLight(0x38bdf8, 3);
-    pointLight.position.set(5, 5, 5);
-    scene.add(pointLight);
+      const pointLight = new THREE.PointLight(0x38bdf8, 3);
+      pointLight.position.set(5, 5, 5);
+      scene.add(pointLight);
 
-    // マウス追従用変数
-    let mouseX = 0;
-    let mouseY = 0;
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
-    };
-    window.addEventListener('mousemove', handleMouseMove);
+      let mouseX = 0;
+      let mouseY = 0;
+      const handleMouseMove = (e: MouseEvent) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
+      };
+      window.addEventListener('mousemove', handleMouseMove);
 
-    // リサイズ処理
-    const handleResize = () => {
-      const width = canvas.parentElement?.clientWidth || window.innerWidth;
-      const height = canvas.parentElement?.clientHeight || window.innerHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height, false);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
+      const handleResize = () => {
+        const width = canvas.parentElement?.clientWidth || window.innerWidth;
+        const height = canvas.parentElement?.clientHeight || window.innerHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height, false);
+      };
+      handleResize();
+      window.addEventListener('resize', handleResize);
 
-    // アニメーションループ
-    let animationFrameId: number;
-    const animate = () => {
-      mesh.rotation.x += 0.003;
-      mesh.rotation.y += 0.005;
+      let animationFrameId: number;
+      const animate = () => {
+        mesh.rotation.x += 0.003;
+        mesh.rotation.y += 0.005;
 
-      mesh.rotation.x += (mouseY - mesh.rotation.x) * 0.05;
-      mesh.rotation.y += (mouseX - mesh.rotation.y) * 0.05;
+        mesh.rotation.x += (mouseY - mesh.rotation.x) * 0.05;
+        mesh.rotation.y += (mouseX - mesh.rotation.y) * 0.05;
 
-      renderer.render(scene, camera);
-      canvas.classList.remove('opacity-0');
-      canvas.classList.add('opacity-80');
-      animationFrameId = requestAnimationFrame(animate);
-    };
+        renderer.render(scene, camera);
+        animationFrameId = requestAnimationFrame(animate);
+      };
 
-    // アクセシビリティ配慮
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      animate();
-    } else {
-      renderer.render(scene, camera);
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        animate();
+      } else {
+        renderer.render(scene, camera);
+      }
+
+      cleanup = () => {
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('resize', handleResize);
+        geometry.dispose();
+        material.dispose();
+        renderer.dispose();
+      };
+    } catch (error) {
+      console.warn('WebGL Context init failed (likely running in CI/Headless mode):', error);
     }
-
-    // クリーンアップ関数の定義（破棄時に呼び出し）
-    cleanup = () => {
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
-      geometry.dispose();
-      material.dispose();
-      renderer.dispose();
-    };
   };
 
-  // ページ初期化とView Transitions遷移時の破棄処理
   initHero3D();
   document.addEventListener('astro:page-load', initHero3D);
   document.addEventListener('astro:before-swap', () => {
