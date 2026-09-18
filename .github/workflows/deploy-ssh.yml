@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Node.js 環境のセットアップ (Node 22 に更新)
+      # 2. Node.js 環境のセットアップ
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -27,14 +27,14 @@ jobs:
           npm ci
           npm run build
 
-      # 4. ビルド生成物 (dist/) を SSH_PORT 10022 指定で rsync 転送
+      # 4. ビルド生成物 (dist/) を REMOTE_PORT 10022 指定で rsync 転送
       - name: Deploy via SSH (rsync)
         uses: easingthemes/ssh-deploy@v5.0.0
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.SSH_HOSTNAME }}
           REMOTE_USER: ${{ secrets.SSH_USERNAME }}
-          SSH_PORT: 10022
+          REMOTE_PORT: 10022
           SOURCE: 'dist/'
           TARGET: '/home/${{ secrets.SSH_USERNAME }}/kuratani-portfolio.work/public_html/'
           ARGS: '-avzr --delete'
