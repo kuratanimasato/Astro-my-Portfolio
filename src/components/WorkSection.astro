@@ -19,7 +19,7 @@ const { allWorkCount, selectedWork } = Astro.props;
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
     {
       selectedWork.map((entry, index) => (
-        <div data-aos="fade-up" data-aos-delay={index * 300}>
+        <div data-aos="fade-up" data-aos-delay={index * 100}>
           <WorkRow entry={entry} />
         </div>
       ))

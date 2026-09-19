@@ -193,6 +193,27 @@ const contactHref = '/#contact';
     });
   }
 
+  function initHashNavigation() {
+    document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((link) => {
+      if (link.dataset.hashBound) return;
+      link.dataset.hashBound = 'true';
+
+      link.addEventListener('click', (event) => {
+        const url = new URL(link.href, window.location.href);
+        if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) {
+          return;
+        }
+
+        const target = document.getElementById(url.hash.slice(1));
+        if (!target) return;
+
+        event.preventDefault();
+        history.pushState(null, '', url.hash);
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
   function initScrollSpy() {
     const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link');
     const sections = document.querySelectorAll<HTMLElement>('section[id]');
@@ -260,6 +281,7 @@ const contactHref = '/#contact';
   document.addEventListener('astro:page-load', () => {
     initHeaderScroll();
     initMobileMenu();
+    initHashNavigation();
     initScrollSpy();
   });
 </script>
