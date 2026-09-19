@@ -4,7 +4,7 @@ summary: '実業務を想定し、PHP/MySQLを用いてフルスクラッチ開�
 role: 'Full-stack Development / UI Design'
 tags: ['PHP', 'MySQL', 'JavaScript', 'HTML/CSS', 'Bootstrap5', 'Git']
 cover: '../../assets/images/screenshot02.png'
-url: 'https://portfolio.oneleather.kuratani-portfolio.site'
+url: 'https://portfolio.oneleather.kuratani-portfolio.work'
 repo: 'https://github.com/kuratanimasato/estimate-system'
 featured: true
 draft: false
